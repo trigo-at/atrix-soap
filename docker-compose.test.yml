@@ -1,0 +1,19 @@
+version: '2'
+services:
+  atrix-soap:
+    build:
+      context: .
+      args:
+        - NPM_TOKEN=${NPM_TOKEN}
+    image: trigo/atrix-soap:latest
+    command: 'yarn run test'
+    environment:
+      - NODE_ENV=test
+      - NPM_TOKEN
+      - I_WANT_TEST_LOGGING=1
+    networks:
+      - atrix-soap_test
+
+networks:
+  atrix-soap_test:
+    driver: bridge
