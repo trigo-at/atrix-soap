@@ -6,7 +6,16 @@ const supertest = require('supertest');
 
 atrix.configure({ pluginMap: { soap: path.join(__dirname, '../') } });
 
-const svc = new atrix.Service('s1', {
+const newService = (name, config) => {
+	const svc = new atrix.Service(name, config);
+
+	atrix.addService(svc);
+	svc.endpoints.add('soap');
+	return svc;
+};
+
+const services = [];
+services.push(newService('s1', {
 	endpoints: {
 		soap: {
 			port: 3028,
@@ -15,22 +24,56 @@ const svc = new atrix.Service('s1', {
 			path: '/hello-service',
 		},
 	},
-});
+}));
 
-atrix.addService(svc);
-svc.endpoints.add('soap');
-
+services.push(newService('withAuth', {
+	endpoints: {
+		soap: {
+			port: 3029,
+			wsdl: `${__dirname}/hello-service-withauth.wsdl`,
+			handlerDir: `${__dirname}/handlers`,
+			path: '/hello-service',
+			connectionAuth: () => {
+				module.exports.authCallbackHit = true;
+				const authWorks = !module.exports.letConnectionAuthFail;
+				return authWorks;
+			},
+		},
+	},
+}));
+services.push(newService('withAuthBasic', {
+	endpoints: {
+		soap: {
+			port: 3030,
+			wsdl: `${__dirname}/hello-service-withauth-basic.wsdl`,
+			handlerDir: `${__dirname}/handlers`,
+			path: '/hello-service',
+			connectionAuth: {
+				basicAuth: {
+					username: 'franz',
+					password: 'supa!',
+				},
+			},
+		},
+	},
+}));
 const svcs = {};
 
 Object.keys(atrix.services).forEach((serviceName) => {
 	const s = atrix.services[serviceName];
 	if (s.config.config.endpoints.soap) {
-		svcs[s.name] = supertest(`http://localhost:${svc.config.config.endpoints.soap.port}`);
+		svcs[s.name] = supertest(`http://localhost:${s.config.config.endpoints.soap.port}`);
 	}
 });
 
 module.exports = {
-	service: svc,
-	start: async () => svc.start(),
-	test: svcs[svc.name],
+	services,
+	start: async () => {
+		for (const svc of services) {
+			await svc.start();
+		}
+	},
+	sts: svcs,
+	authCallbackHit: false,
+	letConnectionAuthFail: false,
 };

@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = async (req, reply, service) => {
+module.exports = async () => {
 	throw new Error('Test Error');
 };

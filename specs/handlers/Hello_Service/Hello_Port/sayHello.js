@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = async (req, reply, service) => {
-	console.log('DADADADAD')
+	module.exports.service = service;
 	reply({ greeting: `Hello Service! ${req.payload.firstName}` });
-
 };
