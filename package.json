@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/trigo-at/atrix-soap#readme",
   "devDependencies": {
-    "@trigo/atrix": "^1.1.0",
+    "@trigo/atrix": "^1.2.0",
     "chai": "^4.0.2",
     "eslint": "^4.0.0",
     "eslint-config-airbnb-base": "^11.2.0",
