@@ -39,6 +39,7 @@
     "basic-auth": "^2.0.0",
     "bluebird": "^3.5.1",
     "express": "^4.16.2",
+    "http-shutdown": "^1.2.0",
     "joi": "^13.0.1",
     "soap": "^0.23.0"
   }
