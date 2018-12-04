@@ -1,3 +1,9 @@
 {
-	"extends": "trigo"
+    "extends": ["trigo", "prettier"],
+    "plugins": ["prettier"],
+    "rules": {
+        "no-underscore-dangle": 0,
+        "no-confusing-arrow": 0,
+        "prettier/prettier": ["warn"]
+    }
 }
