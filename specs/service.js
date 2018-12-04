@@ -6,16 +6,9 @@ const supertest = require('supertest');
 
 atrix.configure({ pluginMap: { soap: path.join(__dirname, '../') } });
 
-const newService = (name, config) => {
-	const svc = new atrix.Service(name, config);
-
-	atrix.addService(svc);
-	svc.endpoints.add('soap');
-	return svc;
-};
-
 const services = [];
-services.push(newService('s1', {
+services.push(atrix.addService({
+	name: 'svc1',
 	endpoints: {
 		soap: {
 			port: 3028,
@@ -26,7 +19,8 @@ services.push(newService('s1', {
 	},
 }));
 
-services.push(newService('withAuth', {
+services.push(atrix.addService({
+	name: 'withAuth',
 	endpoints: {
 		soap: {
 			port: 3029,
@@ -41,7 +35,8 @@ services.push(newService('withAuth', {
 		},
 	},
 }));
-services.push(newService('withAuthBasic', {
+services.push(atrix.addService({
+	name: 'withAuthBasic',
 	endpoints: {
 		soap: {
 			port: 3030,
