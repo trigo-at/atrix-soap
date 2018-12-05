@@ -34,6 +34,7 @@
     "@trigo/atrix": "^6.0.0-7",
     "chai": "^4.0.2",
     "eslint": "^5.9.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-config-trigo": "^4.1.1",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-mocha": "^5.2.0",
