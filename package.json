@@ -1,6 +1,6 @@
 {
   "name": "@trigo/atrix-soap",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Atrix SOAP Server addin",
   "main": "index.js",
   "scripts": {
